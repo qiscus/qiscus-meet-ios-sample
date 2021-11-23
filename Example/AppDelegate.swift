@@ -11,6 +11,7 @@ import QiscusCore
 import Foundation
 import UserNotifications
 import SwiftyJSON
+import QiscusMeet
 
 let APP_ID : String = "sdksample"
 
@@ -18,15 +19,27 @@ let APP_ID : String = "sdksample"
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
-
+    var presenter = UIChatListPresenter()
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         QiscusCore.enableDebugMode(value: true)
         QiscusCore.setup(AppID: APP_ID)
+        QiscusMeet.setup(appId: "qiscus-lMNhoA0fw7CDAY8d", url: "https://meet.qiscus.com")
+        let meetConfig = MeetJwtConfig()
+        //Change with users email
+        meetConfig.email = "gustu@qiscus.net"
+        QiscusMeetConfig.shared.setJwtConfig = meetConfig
+        //
+        QiscusMeetConfig.shared.setEnableRoomName = false
+        QiscusMeetConfig.shared.setChat = false
+        QiscusMeetConfig.shared.setOverflowMenu = true
+        QiscusMeetConfig.shared.setVideoThumbnailsOn = false
+        QiscusMeetConfig.shared.setEnableScreenSharing = true
+        QiscusMeetConfig.shared.setEnableScreenSharing = false
+        QiscusMeetConfig.shared.setChat = false
         UINavigationBar.appearance().barTintColor = UIColor.white
         UINavigationBar.appearance().tintColor = UIColor.white
         self.auth()
-        
         if #available(iOS 10.0, *) {
             // For iOS 10 display notification (sent via APNS)
             UNUserNotificationCenter.current().delegate = self
@@ -42,7 +55,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         
         application.registerForRemoteNotifications()
-        
         return true
     }
     
@@ -63,7 +75,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 print("failed register device token = \(error.message)")
             }
         }
-        
+
     }
     
     func application(_ application: UIApplication, didReceive notification: UILocalNotification) {
@@ -124,6 +136,8 @@ extension AppDelegate {
         if QiscusCore.hasSetupUser() {
             target = UIChatListViewController()
             _ = QiscusCore.connect(delegate: self)
+            QiscusCore.delegate = self
+            QiscusMeet.shared.QiscusMeetDelegate = self
         }else {
             target = LoginViewController()
         }
@@ -132,6 +146,7 @@ extension AppDelegate {
         self.window = UIWindow.init(frame: UIScreen.main.bounds)
         self.window?.rootViewController = navbar
         self.window?.makeKeyAndVisible()
+        
     }
     
     func registerDeviceToken(){
@@ -208,3 +223,138 @@ extension AppDelegate : UNUserNotificationCenterDelegate {
     }
 }
 // [END ios_10_message_handling]
+extension AppDelegate : QiscusCoreDelegate {
+    func onRoomMessageReceived(_ room: RoomModel, message: CommentModel) {
+        let profile = QiscusCore.getProfile()
+        let type = message.type
+        if(type == "call"){
+            let status = message.extras!["status"] as! String
+            if(message.isMyComment()){
+                if(status == "answer"){
+                    QiscusMeet.call(isVideo: true, isMicMuted: false, room: room.id , avatarUrl: profile!.avatarUrl.absoluteString , displayName: profile!.username,callKitName: "Qiscus Chat", onSuccess: { (vc) in
+                        vc.modalPresentationStyle = .fullScreen
+                        if let window = self.window, let rootViewController = window.rootViewController {
+                            var currentController = rootViewController
+                            while let presentedController = currentController.presentedViewController {
+                                currentController = presentedController
+                            }
+                            currentController.present(vc, animated: true)
+
+                        }
+                    }) { (error) in
+                        print("meet error =\(error)")
+                    }
+                }else if  (status == "calling"){
+                    let vc = CallVC()
+                    vc.isCaller = true
+                    vc.isCalling = true
+                    vc.room = room
+                    vc.modalPresentationStyle = .fullScreen
+                    if let window = self.window, let rootViewController = window.rootViewController {
+                            var currentController = rootViewController
+                            while let presentedController = currentController.presentedViewController {
+                                currentController = presentedController
+                            }
+                        currentController.present(vc, animated: true)
+
+                        }
+                    
+                }
+                else if(status == "reject"){
+                    UIApplication.shared.keyWindow!.rootViewController?.dismiss(animated: true, completion: nil)
+                }
+            } else{
+                if(status == "answer"){
+                    QiscusMeet.call(isVideo: true, isMicMuted: false, room: room.id , avatarUrl: profile!.avatarUrl.absoluteString , displayName: profile!.username,callKitName: "Qiscus Chat", onSuccess: { (vc) in
+                        vc.modalPresentationStyle = .fullScreen
+                        if let window = self.window, let rootViewController = window.rootViewController {
+                            var currentController = rootViewController
+                            while let presentedController = currentController.presentedViewController {
+                                currentController = presentedController
+                            }
+                            currentController.present(vc, animated: true)
+                     }
+                    }) { (error) in
+                        print("meet error =\(error)")
+                    }
+                }else if(status == "calling"){
+                    let vc = CallVC()
+                    vc.isCaller = false
+                    vc.isCalling = true
+                    vc.room = room
+                    vc.modalPresentationStyle = .fullScreen
+                        if let window = self.window, let rootViewController = window.rootViewController {
+                            var currentController = rootViewController
+                            while let presentedController = currentController.presentedViewController {
+                                currentController = presentedController
+                            }
+                            currentController.present(vc, animated: true)
+
+                        }
+                }  else if(status == "reject"){
+                    UIApplication.shared.keyWindow!.rootViewController?.dismiss(animated: true, completion: nil)
+                }
+            }
+        }
+    }
+    
+    func onRoomMessageUpdated(_ room: RoomModel, message: CommentModel) {
+    
+    }
+    
+    func onRoomMessageDeleted(room: RoomModel, message: CommentModel) {
+        
+    }
+    
+    func onRoomDidChangeComment(comment: CommentModel, changeStatus status: CommentStatus) {
+        
+    }
+    
+    func onRoomMessageDelivered(message: CommentModel) {
+        
+    }
+    
+    func onRoomMessageRead(message: CommentModel) {
+        
+    }
+    
+    func onRoom(update room: RoomModel) {
+        
+    }
+    
+    func onRoom(deleted room: RoomModel) {
+        
+    }
+    
+    func gotNew(room: RoomModel) {
+        
+    }
+    
+    func onChatRoomCleared(roomId: String) {
+        
+    }
+    
+    
+}
+extension AppDelegate : QiscusMeetDelegate {
+    func conferenceJoined() {
+        
+    }
+    
+    func conferenceWillJoin() {
+        
+    }
+    
+    func conferenceTerminated() {
+    }
+    
+    func participantJoined() {
+        
+    }
+    
+    func participantLeft() {
+        QiscusMeet.endCall()
+    }
+    
+    
+}
