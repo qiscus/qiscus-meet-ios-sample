@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
-    <device id="retina4_7" orientation="portrait">
-        <adaptation id="fullscreen"/>
-    </device>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="19455" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19454"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="UIChatNavigation" customModule="Qiscus" customModuleProvider="target">
             <connections>
+                <outlet property="btCall" destination="OUj-oD-jqe" id="Tej-3M-Rw1"/>
                 <outlet property="imageViewAvatar" destination="x4w-M4-Qzq" id="TvU-KZ-gJv"/>
                 <outlet property="labelSubtitle" destination="8np-gj-3s0" id="if8-Ua-j4G"/>
                 <outlet property="labelTitle" destination="Ymu-7h-EyA" id="AJ6-xN-fAQ"/>
@@ -35,7 +35,7 @@
                     <nil key="highlightedColor"/>
                 </label>
                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="avatar" translatesAutoresizingMaskIntoConstraints="NO" id="x4w-M4-Qzq">
-                    <rect key="frame" x="0.0" y="8" width="24" height="24"/>
+                    <rect key="frame" x="0.0" y="-10" width="60" height="60"/>
                     <constraints>
                         <constraint firstAttribute="width" secondItem="x4w-M4-Qzq" secondAttribute="height" multiplier="1:1" id="kYK-tC-d5V"/>
                     </constraints>
@@ -43,11 +43,24 @@
                         <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="YES"/>
                     </userDefinedRuntimeAttributes>
                 </imageView>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="OUj-oD-jqe">
+                    <rect key="frame" x="326" y="4" width="44" height="31"/>
+                    <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                    <state key="normal" title="Button" image="phone" catalog="system"/>
+                    <buttonConfiguration key="configuration" style="plain" image="phone" catalog="system">
+                        <color key="baseForegroundColor" systemColor="labelColor"/>
+                    </buttonConfiguration>
+                </button>
             </subviews>
+            <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <constraints>
+                <constraint firstItem="OUj-oD-jqe" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" constant="4" id="6WM-oh-RQn"/>
                 <constraint firstItem="8np-gj-3s0" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="45" id="B95-eA-0mQ"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" secondItem="OUj-oD-jqe" secondAttribute="bottom" constant="5" id="DgE-6b-CKv"/>
                 <constraint firstItem="Ymu-7h-EyA" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="45" id="OKq-Uy-YxC"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="OUj-oD-jqe" secondAttribute="trailing" constant="5" id="SIf-K0-7Wp"/>
+                <constraint firstItem="OUj-oD-jqe" firstAttribute="leading" secondItem="x4w-M4-Qzq" secondAttribute="trailing" constant="266" id="VfV-MB-7H2"/>
                 <constraint firstItem="Ymu-7h-EyA" firstAttribute="centerY" secondItem="vUN-kp-3ea" secondAttribute="centerY" constant="-9" id="ayf-xL-tzG"/>
                 <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="Ymu-7h-EyA" secondAttribute="trailing" constant="10" id="hky-0s-8aE"/>
                 <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="8np-gj-3s0" secondAttribute="trailing" constant="10" id="iM3-q0-tpe"/>
@@ -56,11 +69,14 @@
                 <constraint firstItem="x4w-M4-Qzq" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="uZB-Pd-oAE"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
-            <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
-            <point key="canvasLocation" x="-362.39999999999998" y="-417.8410794602699"/>
+            <point key="canvasLocation" x="-362.39999999999998" y="-418.29085457271367"/>
         </view>
     </objects>
     <resources>
-        <image name="avatar" width="24.269662857055664" height="24.269662857055664"/>
+        <image name="avatar" width="60" height="60"/>
+        <image name="phone" catalog="system" width="128" height="115"/>
+        <systemColor name="labelColor">
+            <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
     </resources>
 </document>

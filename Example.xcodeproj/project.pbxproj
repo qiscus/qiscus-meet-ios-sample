@@ -94,6 +94,8 @@
 		3DDEFB6A2192D35600484795 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3DDEFB682192D35600484795 /* Main.storyboard */; };
 		3DDEFB6C2192D35D00484795 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3DDEFB6B2192D35D00484795 /* Assets.xcassets */; };
 		3DDEFB6F2192D35D00484795 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3DDEFB6D2192D35D00484795 /* LaunchScreen.storyboard */; };
+		D3137DE027352BC00076E7D6 /* CallVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3137DDF27352BC00076E7D6 /* CallVC.swift */; };
+		D377F12C2739293200365FDD /* CallVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = D377F12B2739293200365FDD /* CallVC.xib */; };
 		EE4AD92B42D67598F6C5EEA2 /* Pods_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 93E910F3CE92601E11DB86C8 /* Pods_Example.framework */; };
 /* End PBXBuildFile section */
 
@@ -191,6 +193,8 @@
 		93E910F3CE92601E11DB86C8 /* Pods_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C02BD24DCE9BA0B6E0BC7700 /* Pods-Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Example.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Example/Pods-Example.debug.xcconfig"; sourceTree = "<group>"; };
 		C5AD7F688AE45942F951EE04 /* Pods-Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Example.release.xcconfig"; path = "Pods/Target Support Files/Pods-Example/Pods-Example.release.xcconfig"; sourceTree = "<group>"; };
+		D3137DDF27352BC00076E7D6 /* CallVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallVC.swift; sourceTree = "<group>"; };
+		D377F12B2739293200365FDD /* CallVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CallVC.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -474,6 +478,7 @@
 		3DDEFB632192D35600484795 /* Example */ = {
 			isa = PBXGroup;
 			children = (
+				D36B791C27329B6B003FEE91 /* Call */,
 				3D96C02E2553066C00583F50 /* Forward */,
 				3DAF2A35222E62330002B4E3 /* RoomInfo */,
 				3D5DD75D2227809100E39C96 /* Profile */,
@@ -502,6 +507,15 @@
 				93E910F3CE92601E11DB86C8 /* Pods_Example.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		D36B791C27329B6B003FEE91 /* Call */ = {
+			isa = PBXGroup;
+			children = (
+				D3137DDF27352BC00076E7D6 /* CallVC.swift */,
+				D377F12B2739293200365FDD /* CallVC.xib */,
+			);
+			path = Call;
 			sourceTree = "<group>";
 		};
 		D70B999F40A6457404F78D14 /* Pods */ = {
@@ -541,6 +555,9 @@
 		3DDEFB592192D35600484795 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				KnownAssetTags = (
+					CallVC,
+				);
 				LastSwiftUpdateCheck = 0940;
 				LastUpgradeCheck = 0940;
 				ORGANIZATIONNAME = Qiscus;
@@ -616,6 +633,7 @@
 				3DDEFB6A2192D35600484795 /* Main.storyboard in Resources */,
 				3D96C0292552F20900583F50 /* QReplyLeftCell.xib in Resources */,
 				3D40B8CA2192E20C00FE7228 /* CustomChatInput.xib in Resources */,
+				D377F12C2739293200365FDD /* CallVC.xib in Resources */,
 				3D80B2B0221BB4770053280C /* CreateNewGroupVC.xib in Resources */,
 				3D96C0322553067F00583F50 /* ForwardViewController.xib in Resources */,
 				3D96C02D2552F29900583F50 /* QReplyRightCell.xib in Resources */,
@@ -678,6 +696,7 @@
 				3D40B8AD2192E20C00FE7228 /* QExtensionUICore.swift in Sources */,
 				3D96C02C2552F29900583F50 /* QReplyRightCell.swift in Sources */,
 				3D40B8E62192E20C00FE7228 /* QSystemCell.swift in Sources */,
+				D3137DE027352BC00076E7D6 /* CallVC.swift in Sources */,
 				3D3854A421B4DE6600435B31 /* UIChatNavigation.swift in Sources */,
 				3DCF6A3A2199277F00C108E6 /* LoginViewController.swift in Sources */,
 				3D40B9002192E20C00FE7228 /* ColorConfiguration.swift in Sources */,
@@ -868,8 +887,9 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = QG8KA4P8TE;
+				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = arm64;
 				INFOPLIST_FILE = Example/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -891,8 +911,9 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = QG8KA4P8TE;
+				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = arm64;
 				INFOPLIST_FILE = Example/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

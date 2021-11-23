@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
-    <device id="retina4_7" orientation="portrait">
-        <adaptation id="fullscreen"/>
-    </device>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="19455" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19454"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -76,6 +74,7 @@
                             </constraints>
                         </imageView>
                     </subviews>
+                    <viewLayoutGuide key="safeArea" id="eEe-ot-zp1"/>
                     <color key="backgroundColor" red="0.89803921568627454" green="0.89803921568627454" blue="0.89803921568627454" alpha="1" colorSpace="calibratedRGB"/>
                     <constraints>
                         <constraint firstItem="0ne-es-v2Y" firstAttribute="leading" secondItem="eEe-ot-zp1" secondAttribute="leading" constant="40" id="4WH-Mx-caL"/>
@@ -86,13 +85,13 @@
                         <constraint firstItem="oCm-Qx-TqW" firstAttribute="top" secondItem="Bb8-5U-ENo" secondAttribute="bottom" constant="23" id="pwC-EK-EsE"/>
                         <constraint firstItem="eEe-ot-zp1" firstAttribute="trailing" secondItem="0ne-es-v2Y" secondAttribute="trailing" constant="40" id="ush-bE-PaS"/>
                     </constraints>
-                    <viewLayoutGuide key="safeArea" id="eEe-ot-zp1"/>
                 </view>
                 <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="DF6-Lu-tNz">
                     <rect key="frame" x="0.0" y="65" width="375" height="552"/>
                     <color key="backgroundColor" red="0.97647058823529409" green="0.97647058823529409" blue="0.97647058823529409" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                 </tableView>
             </subviews>
+            <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
             <color key="backgroundColor" red="0.97647058823529409" green="0.97647058823529409" blue="0.97647058823529409" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
                 <constraint firstItem="XjR-Mj-c6H" firstAttribute="bottom" secondItem="fnl-2z-Ty3" secondAttribute="bottom" id="AVd-I5-3cz"/>
@@ -110,7 +109,6 @@
                 <constraint firstItem="XjR-Mj-c6H" firstAttribute="top" secondItem="fvK-Gz-gWg" secondAttribute="bottom" id="gWz-WG-Wu8"/>
                 <constraint firstItem="2TZ-HA-VEY" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="pDR-f8-WFw"/>
             </constraints>
-            <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
             <point key="canvasLocation" x="800.79999999999995" y="472.71364317841085"/>
         </view>
     </objects>
