@@ -183,7 +183,7 @@ extension UIChatListViewController : UIChatListView {
         }
     }
     
-    func updateRooms(data: RoomModel) {
+    func updateRooms(data: RoomModel, message:CommentModel) {
         self.tableView.reloadData()
     }
     
