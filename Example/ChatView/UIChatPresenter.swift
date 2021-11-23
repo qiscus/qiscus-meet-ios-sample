@@ -26,7 +26,7 @@ protocol UIChatViewDelegate {
     func onReloadComment()
     func onSendingComment(comment: CommentModel, newSection: Bool)
     func onSendMessageFinished(comment: CommentModel)
-    func onGotNewComment(newSection: Bool)
+    func onGotNewComment(newSection: Bool,_message:CommentModel)
     func onUpdateComment(comment: CommentModel, indexpath: IndexPath)
     func onUser(name: String, typing: Bool)
     func onUser(name: String, isOnline: Bool, message: String)
@@ -206,6 +206,16 @@ class UIChatPresenter: UIChatUserInteraction {
         }
     }
     
+    func call(message:CommentModel){
+      
+        addNewCommentUI(message, isIncoming: false)
+        QiscusCore.shared.sendMessage(message: message, onSuccess:{ [weak self] (comment) in
+            self?.didComment(comment: comment, changeStatus: comment.status)
+        }) { (error) in
+            //
+        }
+    }
+    
     func sendMessage(withText text: String) {
         // create object comment
         // MARK: TODO improve object generator
@@ -250,7 +260,7 @@ class UIChatPresenter: UIChatUserInteraction {
         // choose uidelegate
         if isIncoming {
             QiscusCore.shared.markAsRead(roomId: message.roomId, commentId: message.id)
-            self.viewPresenter?.onGotNewComment(newSection: section)
+            self.viewPresenter?.onGotNewComment(newSection: section,_message: message)
         }else {
             self.viewPresenter?.onSendingComment(comment: message, newSection: section)
         }
