@@ -12,7 +12,7 @@ import QiscusCore
 protocol UIChatListView {
     func setEmptyData(message: String)
     func didFinishLoadChat(rooms : [RoomModel])
-    func updateRooms(data: RoomModel)
+    func updateRooms(data: RoomModel, message:CommentModel)
     func didUpdate(user: MemberModel, isTyping typing: Bool, in room: RoomModel)
 }
 
@@ -94,13 +94,13 @@ class UIChatListPresenter {
 extension UIChatListPresenter : QiscusCoreDelegate {
     func onRoomMessageUpdated(_ room: RoomModel, message: CommentModel) {
         loadFromLocal(refresh: false)
-        self.viewPresenter?.updateRooms(data: room)
+        self.viewPresenter?.updateRooms(data: room, message: message)
     }
     func onRoomMessageReceived(_ room: RoomModel, message: CommentModel){
         // show in app notification
-        print("got new comment: \(message.message)")
+        print("got new comments: \(message.message)")
         loadFromLocal(refresh: false)
-        self.viewPresenter?.updateRooms(data: room)
+        self.viewPresenter?.updateRooms(data: room , message: message)
         
     }
     
