@@ -7,6 +7,7 @@
 
 import UIKit
 import QiscusCore
+import QiscusMeet
 
 class UIChatNavigation: UIView {
     var contentsView            : UIView!
@@ -17,6 +18,8 @@ class UIChatNavigation: UIView {
     @IBOutlet weak var labelSubtitle: UILabel!
     /// UIImageView room avatar
     @IBOutlet weak var imageViewAvatar: UIImageView!
+    
+    @IBOutlet weak var btCall: UIButton!
     
     var room: RoomModel? {
         set {
@@ -74,6 +77,7 @@ class UIChatNavigation: UIView {
             self.imageViewAvatar.heightAnchor.constraint(equalToConstant: 30).isActive = true
             self.imageViewAvatar.layer.cornerRadius = self.imageViewAvatar.frame.height/2
         }
+        self.btCall.setTitle("", for: [])
     }
     
     func present(room: RoomModel) {
