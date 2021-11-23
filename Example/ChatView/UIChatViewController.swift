@@ -56,7 +56,6 @@ class UIChatViewController: UIViewController {
     var chatTitleView : UIChatNavigation = UIChatNavigation()
     var chatInput : CustomChatInput = CustomChatInput()
     private var presenter: UIChatPresenter = UIChatPresenter()
-    
     var heightAtIndexPath: [String: CGFloat] = [:]
     var roomId: String = ""
     var chatDelegate : UIChatView? = nil
@@ -80,6 +79,9 @@ class UIChatViewController: UIViewController {
             return self.presenter.room
         }
     }
+    //Integrate Qiscus Meet
+    var isCalling:Bool = false
+    var profile:UserModel?=nil
     
     open func getProgressBar() -> UIProgressView {
         return progressBar
@@ -92,11 +94,13 @@ class UIChatViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.setupUI()
+        profile = QiscusCore.getUserData()!
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.presenter.attachView(view: self)
+        self.setupUI()
         let center: NotificationCenter = NotificationCenter.default
         center.addObserver(self, selector: #selector(UIChatViewController.keyboardWillHide(_:)), name: UIResponder.keyboardWillHideNotification, object: nil)
         center.addObserver(self, selector: #selector(UIChatViewController.keyboardChange(_:)), name: UIResponder.keyboardWillChangeFrameNotification, object: nil)
@@ -161,7 +165,6 @@ class UIChatViewController: UIViewController {
         self.chatInput.hidePreviewReply()
         
     }
-    
     private func setupInputBar(_ inputchatview: UIChatInput) {
         inputchatview.frame.size    = self.viewChatInput.frame.size
         inputchatview.frame.origin  = CGPoint.init(x: 0, y: 0)
@@ -197,7 +200,21 @@ class UIChatViewController: UIViewController {
         self.chatTitleView = UIChatNavigation(frame: self.navigationController?.navigationBar.frame ?? CGRect.zero)
         self.navigationItem.titleView = chatTitleView
         self.chatTitleView.room = room
-        
+        self.chatTitleView.btCall.addTarget(self, action: #selector(calling), for: .touchUpInside)
+    }
+    
+    @objc func calling(){
+        self.isCalling = true
+        // create object comment
+        // MARK: TODO improve object generator
+        let message = CommentModel()
+        message.message = "Calling"
+        message.type    = "call"
+        message.extras = ["status":"calling"]
+        if let r = self.room {
+             message.roomId  = r.id
+        }
+        presenter.call(message: message)
     }
     
     private func backButton(_ target: UIViewController, action: Selector) -> UIBarButtonItem{
@@ -330,7 +347,26 @@ class UIChatViewController: UIViewController {
                 cell.cellMenu = self
                 return cell
             }
-        }else if  message.type == "file_attachment" {
+        }
+        else if message.type == "call" {
+            if (message.isMyComment() == true){
+                let cell = tableView.dequeueReusableCell(withIdentifier: "qTextRightCell", for: indexPath) as! QTextRightCell
+                cell.menuConfig = menuConfig
+                cell.cellMenu = self
+                return cell
+            }else{
+                let cell = tableView.dequeueReusableCell(withIdentifier: "qTextLeftCell", for: indexPath) as! QTextLeftCell
+                if self.room?.type == .group {
+                    cell.colorName = colorName
+                    cell.isPublic = true
+                }else {
+                    cell.isPublic = false
+                }
+                cell.cellMenu = self
+                return cell
+            }
+        }
+        else if  message.type == "file_attachment" {
             guard let payload = message.payload else {
                     let cell = tableView.dequeueReusableCell(withIdentifier: "emptyCell", for: indexPath) as! EmptyCell
                     return cell
@@ -430,6 +466,7 @@ extension UIChatViewController: UIChatViewDelegate {
         if self.tableViewConversation.cellForRow(at: indexpath) != nil{
             self.tableViewConversation.reloadRows(at: [indexpath], with: .none)
         }
+        
     }
     
     func onLoadMessageFailed(message: String) {
@@ -504,10 +541,9 @@ extension UIChatViewController: UIChatViewDelegate {
     }
     
     func onSendMessageFinished(comment: CommentModel) {
-        
     }
     
-    func onGotNewComment(newSection: Bool) {
+    func onGotNewComment(newSection: Bool,_message:CommentModel) {
         if self.presenter.comments.count == 0 {
             self.tableViewConversation.isHidden = true
             self.emptyMessageView.alpha = 1
@@ -741,3 +777,4 @@ extension UIChatViewController : UIBaseChatCellDelegate {
     }
     
 }
+
