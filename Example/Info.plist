@@ -40,6 +40,7 @@
 	<string>This app need access for uploading and save images</string>
 	<key>UIBackgroundModes</key>
 	<array>
+		<string>voip</string>
 		<string>audio</string>
 		<string>fetch</string>
 		<string>location</string>
@@ -66,7 +67,9 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
-    <key>UIUserInterfaceStyle</key>
-    <string>Light</string>
+	<key>UIUserInterfaceStyle</key>
+	<string>Light</string>
+	<key>ITSAppUsesNonExemptEncryption</key>
+	<false/>
 </dict>
 </plist>
